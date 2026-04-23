@@ -1,74 +1,143 @@
-# Trackly - Placement Readiness Dashboard
+# 🚀 Trackly — Placement Readiness Dashboard
 
-A full-stack Next.js dashboard for college placement teams to track coding readiness from LeetCode and GitHub in one place.
+> A full-stack **Next.js analytics dashboard** for college placement teams to track student coding readiness using **LeetCode + GitHub insights**.
 
-## Features
+## 📌 Overview
 
-- Backend aggregation endpoint: `GET /api/students`
-- Add student endpoint: `POST /api/students`
-- Update student endpoint: `PUT /api/students/:id`
-- Delete student endpoint: `DELETE /api/students/:id`
-- LeetCode + GitHub data processing with derived scoring
-- MongoDB persistence with Mongoose
-- Per-student API caching in MongoDB (30 minutes)
-- Responsive dashboard with:
-  - Collapsible sidebar
-  - Interactive sidebar sections (Dashboard, Students, Reports, Alerts, Settings)
-  - Reports tab with full student report (name + roll no lookup or saved list selection)
-  - Summary cards
-  - Search and status filters
-  - Add Student modal (Roll No, name, LeetCode username, GitHub username)
-  - Student table with hover actions
-  - Detail drawer (LeetCode + GitHub breakdown)
-  - Alerts panel for inactive, low-score, and top performers
-- Graceful API failure fallback to cached data with stale marker
+Trackly helps placement cells **monitor, evaluate, and act** on student performance — all in one place.
+It aggregates coding activity, calculates readiness scores, and highlights **top performers, inactive students, and risk cases**.
 
-## Tech Stack
+## ✨ Key Features
 
-- Next.js (App Router)
-- React + TypeScript
-- Tailwind CSS
-- MongoDB + Mongoose
-- Backend via Next.js API Route Handlers
+### 🔗 Backend API
 
-## Setup
+* `GET /api/students` → Fetch all students
+* `POST /api/students` → Add a new student
+* `PUT /api/students/:id` → Update student
+* `DELETE /api/students/:id` → Remove student
 
-1. Install dependencies:
+---
+
+### 📊 Data Intelligence
+
+* 🔄 Aggregates **LeetCode + GitHub** data
+* 📈 Derived readiness scoring system
+* ⚡ Smart caching (30 min per student)
+* 🛡️ Graceful fallback to cached data (with stale indicator)
+
+---
+
+### 🖥️ Dashboard UI
+
+* 📂 Collapsible sidebar (Dashboard, Students, Reports, Alerts, Settings)
+* 🔍 Search + status filtering
+* 📋 Interactive student table with hover actions
+* ➕ Add Student modal
+* 📊 Summary cards (quick insights)
+* 📑 Reports tab (lookup by Roll No / Name)
+* 📌 Detail drawer (deep GitHub + LeetCode breakdown)
+* 🚨 Alerts panel:
+
+  * Inactive students
+  * Low performers
+  * Top performers
+
+---
+
+## 🧱 Tech Stack
+
+| Layer        | Technology                              |
+| ------------ | --------------------------------------- |
+| Frontend     | Next.js (App Router), React, TypeScript |
+| Styling      | Tailwind CSS                            |
+| Backend      | Next.js API Routes                      |
+| Database     | MongoDB + Mongoose                      |
+| Data Sources | LeetCode GraphQL + GitHub API           |
+
+---
+
+## ⚙️ Getting Started
+
+### 1️⃣ Install Dependencies
 
 ```bash
 npm install
 ```
 
-2. Create env file:
+---
+
+### 2️⃣ Setup Environment Variables
 
 ```bash
 cp .env.local.example .env.local
 ```
 
-The app reads `.env.local` at runtime. `.env.local.example` is only a template, so make sure the real `.env.local` exists before starting the server.
-
-Then set your token in `.env.local` if you want authenticated GitHub requests:
+Update `.env.local`:
 
 ```env
-# Optional, but recommended for higher GitHub API limits.
+# Recommended for higher GitHub API rate limits
 GITHUB_TOKEN=your_token_here
+
+# MongoDB connection string
 MONGODB_URI=your_connection_string
 ```
 
-Trackly queries LeetCode's official GraphQL endpoint directly, so no LeetCode proxy container is required.
+---
 
-3. Run development server:
+### 3️⃣ Run the App
 
 ```bash
 npm run dev
 ```
 
-4. Open:
+---
 
-`http://localhost:3000`
+### 4️⃣ Open in Browser
 
-## Notes
+👉 [http://localhost:3000](http://localhost:3000)
 
-- GitHub token is used only on the backend route; when it is missing, Trackly falls back to public GitHub pages.
-- If upstream API calls fail, the API returns last cached MongoDB values and marks data as stale.
-- MongoDB connection utility is in `lib/dbConnect.ts` and schema is in `models/Student.ts`.
+---
+
+## 🧠 How It Works
+
+* 📡 Fetches real-time data from:
+
+  * LeetCode (GraphQL)
+  * GitHub API
+* 🧮 Computes a **readiness score** per student
+* 💾 Stores + caches results in MongoDB
+* ⚡ Uses cached data if APIs fail (marked as *stale*)
+
+---
+
+## 🗂️ Project Structure
+
+```
+├── app/                 # Next.js App Router
+├── components/          # UI Components
+├── lib/dbConnect.ts     # MongoDB connection
+├── models/Student.ts    # Mongoose schema
+├── pages/api/           # API routes
+└── styles/              # Tailwind config
+```
+
+---
+
+## ⚠️ Important Notes
+
+* 🔑 GitHub token is **optional but recommended**
+* 📉 Without token → falls back to public GitHub scraping
+* 🧊 Cached data ensures **resilience during API failures**
+* ❌ No LeetCode proxy needed (direct GraphQL usage)
+
+---
+
+## 🎯 Use Cases
+
+* 🏫 College placement tracking
+* 📊 Student performance analytics
+* 🎯 Identifying placement-ready candidates
+* 🚨 Early detection of low engagement
+
+---
+
