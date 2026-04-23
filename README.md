@@ -1,143 +1,90 @@
-# 🚀 Trackly — Placement Readiness Dashboard
+Trackly — Placement Readiness Dashboard
 
-> A full-stack **Next.js analytics dashboard** for college placement teams to track student coding readiness using **LeetCode + GitHub insights**.
+A full-stack placement intelligence system that tracks coding readiness using LeetCode + GitHub
 
-## 📌 Overview
+A centralized dashboard that aggregates student coding activity and converts it into actionable placement insights
 
-Trackly helps placement cells **monitor, evaluate, and act** on student performance — all in one place.
-It aggregates coding activity, calculates readiness scores, and highlights **top performers, inactive students, and risk cases**.
+link
+github
 
-## ✨ Key Features
+What problem this solves
 
-### 🔗 Backend API
+Placement teams don’t have a single source of truth for student coding readiness.
 
-* `GET /api/students` → Fetch all students
-* `POST /api/students` → Add a new student
-* `PUT /api/students/:id` → Update student
-* `DELETE /api/students/:id` → Remove student
+LeetCode progress is separate
+GitHub activity is separate
+No unified scoring system
+No early alerts for low performers
 
----
+This leads to missed opportunities and poor visibility during placements.
 
-### 📊 Data Intelligence
+What I built
 
-* 🔄 Aggregates **LeetCode + GitHub** data
-* 📈 Derived readiness scoring system
-* ⚡ Smart caching (30 min per student)
-* 🛡️ Graceful fallback to cached data (with stale indicator)
+Trackly is a data-driven readiness dashboard that:
 
----
+Aggregates LeetCode and GitHub data
+Computes a derived readiness score
+Identifies top performers, inactive students, and at-risk candidates
+Provides a real-time, actionable dashboard for placement teams
+How it works
+Fetches data from:
+LeetCode (GraphQL)
+GitHub API
+Processes:
+Problem-solving stats
+Contribution activity
+Derived scoring logic
+Stores:
+MongoDB with per-student caching (30 minutes)
+Serves:
+Clean API endpoints via Next.js
+Displays:
+Interactive dashboard with filters, reports, and alerts
+Key Features
+Smart Dashboard
+Summary cards for quick insights
+Search and status filters
+Interactive student table
+Detail drawer with deep breakdown
+Reports System
+Lookup by name or roll number
+Full student performance report
+Alerts Engine
+Inactive students
+Low performers
+Top performers
+Backend System
+Full CRUD APIs
+Intelligent caching layer
+Graceful API fallback (stale data handling)
+Tech Stack
+Frontend: Next.js (App Router), React, TypeScript
+Styling: Tailwind CSS
+Backend: Next.js API Routes
+Database: MongoDB with Mongoose
+APIs: LeetCode GraphQL, GitHub API
+Engineering Highlights
+Designed a resilient data layer with fallback to cached data
+Built API aggregation logic combining multiple external sources
+Implemented a derived scoring system instead of relying on raw metrics
+Optimized performance using a per-student caching strategy
+Created a modular and scalable full-stack architecture
+What to look at (Screenshots)
+Dashboard overview showing system insights
+Student table with filters and interactions
+Detailed report view showing data depth
+Why this project stands out
 
-### 🖥️ Dashboard UI
+This is not just a CRUD dashboard.
 
-* 📂 Collapsible sidebar (Dashboard, Students, Reports, Alerts, Settings)
-* 🔍 Search + status filtering
-* 📋 Interactive student table with hover actions
-* ➕ Add Student modal
-* 📊 Summary cards (quick insights)
-* 📑 Reports tab (lookup by Roll No / Name)
-* 📌 Detail drawer (deep GitHub + LeetCode breakdown)
-* 🚨 Alerts panel:
+It demonstrates:
 
-  * Inactive students
-  * Low performers
-  * Top performers
-
----
-
-## 🧱 Tech Stack
-
-| Layer        | Technology                              |
-| ------------ | --------------------------------------- |
-| Frontend     | Next.js (App Router), React, TypeScript |
-| Styling      | Tailwind CSS                            |
-| Backend      | Next.js API Routes                      |
-| Database     | MongoDB + Mongoose                      |
-| Data Sources | LeetCode GraphQL + GitHub API           |
-
----
-
-## ⚙️ Getting Started
-
-### 1️⃣ Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-### 2️⃣ Setup Environment Variables
-
-```bash
-cp .env.local.example .env.local
-```
-
-Update `.env.local`:
-
-```env
-# Recommended for higher GitHub API rate limits
-GITHUB_TOKEN=your_token_here
-
-# MongoDB connection string
-MONGODB_URI=your_connection_string
-```
-
----
-
-### 3️⃣ Run the App
-
-```bash
-npm run dev
-```
-
----
-
-### 4️⃣ Open in Browser
-
-👉 [http://localhost:3000](http://localhost:3000)
-
----
-
-## 🧠 How It Works
-
-* 📡 Fetches real-time data from:
-
-  * LeetCode (GraphQL)
-  * GitHub API
-* 🧮 Computes a **readiness score** per student
-* 💾 Stores + caches results in MongoDB
-* ⚡ Uses cached data if APIs fail (marked as *stale*)
-
----
-
-## 🗂️ Project Structure
-
-```
-├── app/                 # Next.js App Router
-├── components/          # UI Components
-├── lib/dbConnect.ts     # MongoDB connection
-├── models/Student.ts    # Mongoose schema
-├── pages/api/           # API routes
-└── styles/              # Tailwind config
-```
-
----
-
-## ⚠️ Important Notes
-
-* 🔑 GitHub token is **optional but recommended**
-* 📉 Without token → falls back to public GitHub scraping
-* 🧊 Cached data ensures **resilience during API failures**
-* ❌ No LeetCode proxy needed (direct GraphQL usage)
-
----
-
-## 🎯 Use Cases
-
-* 🏫 College placement tracking
-* 📊 Student performance analytics
-* 🎯 Identifying placement-ready candidates
-* 🚨 Early detection of low engagement
-
----
+Real-world data aggregation system design
+Analytics thinking through derived metrics and scoring
+Backend resilience and caching strategies
+Full-stack product thinking
+Impact
+Enables placement teams to make faster, data-driven decisions
+Helps identify placement-ready candidates early
+Reduces manual tracking effort significantly
 
