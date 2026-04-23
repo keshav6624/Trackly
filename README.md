@@ -1,90 +1,74 @@
-Trackly — Placement Readiness Dashboard
+# Trackly - Placement Readiness Dashboard
 
-A full-stack placement intelligence system that tracks coding readiness using LeetCode + GitHub
+A full-stack Next.js dashboard for college placement teams to track coding readiness from LeetCode and GitHub in one place.
 
-A centralized dashboard that aggregates student coding activity and converts it into actionable placement insights
+## Features
 
-link
-github
+- Backend aggregation endpoint: `GET /api/students`
+- Add student endpoint: `POST /api/students`
+- Update student endpoint: `PUT /api/students/:id`
+- Delete student endpoint: `DELETE /api/students/:id`
+- LeetCode + GitHub data processing with derived scoring
+- MongoDB persistence with Mongoose
+- Per-student API caching in MongoDB (30 minutes)
+- Responsive dashboard with:
+  - Collapsible sidebar
+  - Interactive sidebar sections (Dashboard, Students, Reports, Alerts, Settings)
+  - Reports tab with full student report (name + roll no lookup or saved list selection)
+  - Summary cards
+  - Search and status filters
+  - Add Student modal (Roll No, name, LeetCode username, GitHub username)
+  - Student table with hover actions
+  - Detail drawer (LeetCode + GitHub breakdown)
+  - Alerts panel for inactive, low-score, and top performers
+- Graceful API failure fallback to cached data with stale marker
 
-What problem this solves
+## Tech Stack
 
-Placement teams don’t have a single source of truth for student coding readiness.
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind CSS
+- MongoDB + Mongoose
+- Backend via Next.js API Route Handlers
 
-LeetCode progress is separate
-GitHub activity is separate
-No unified scoring system
-No early alerts for low performers
+## Setup
 
-This leads to missed opportunities and poor visibility during placements.
+1. Install dependencies:
 
-What I built
+```bash
+npm install
+```
 
-Trackly is a data-driven readiness dashboard that:
+2. Create env file:
 
-Aggregates LeetCode and GitHub data
-Computes a derived readiness score
-Identifies top performers, inactive students, and at-risk candidates
-Provides a real-time, actionable dashboard for placement teams
-How it works
-Fetches data from:
-LeetCode (GraphQL)
-GitHub API
-Processes:
-Problem-solving stats
-Contribution activity
-Derived scoring logic
-Stores:
-MongoDB with per-student caching (30 minutes)
-Serves:
-Clean API endpoints via Next.js
-Displays:
-Interactive dashboard with filters, reports, and alerts
-Key Features
-Smart Dashboard
-Summary cards for quick insights
-Search and status filters
-Interactive student table
-Detail drawer with deep breakdown
-Reports System
-Lookup by name or roll number
-Full student performance report
-Alerts Engine
-Inactive students
-Low performers
-Top performers
-Backend System
-Full CRUD APIs
-Intelligent caching layer
-Graceful API fallback (stale data handling)
-Tech Stack
-Frontend: Next.js (App Router), React, TypeScript
-Styling: Tailwind CSS
-Backend: Next.js API Routes
-Database: MongoDB with Mongoose
-APIs: LeetCode GraphQL, GitHub API
-Engineering Highlights
-Designed a resilient data layer with fallback to cached data
-Built API aggregation logic combining multiple external sources
-Implemented a derived scoring system instead of relying on raw metrics
-Optimized performance using a per-student caching strategy
-Created a modular and scalable full-stack architecture
-What to look at (Screenshots)
-Dashboard overview showing system insights
-Student table with filters and interactions
-Detailed report view showing data depth
-Why this project stands out
+```bash
+cp .env.local.example .env.local
+```
 
-This is not just a CRUD dashboard.
+The app reads `.env.local` at runtime. `.env.local.example` is only a template, so make sure the real `.env.local` exists before starting the server.
 
-It demonstrates:
+Then set your token in `.env.local` if you want authenticated GitHub requests:
 
-Real-world data aggregation system design
-Analytics thinking through derived metrics and scoring
-Backend resilience and caching strategies
-Full-stack product thinking
-Impact
-Enables placement teams to make faster, data-driven decisions
-Helps identify placement-ready candidates early
-Reduces manual tracking effort significantly
+```env
+# Optional, but recommended for higher GitHub API limits.
+GITHUB_TOKEN=your_token_here
+MONGODB_URI=your_connection_string
+```
 
+Trackly queries LeetCode's official GraphQL endpoint directly, so no LeetCode proxy container is required.
+
+3. Run development server:
+
+```bash
+npm run dev
+```
+
+4. Open:
+
+`http://localhost:3000`
+
+## Notes
+
+- GitHub token is used only on the backend route; when it is missing, Trackly falls back to public GitHub pages.
+- If upstream API calls fail, the API returns last cached MongoDB values and marks data as stale.
+- MongoDB connection utility is in `lib/dbConnect.ts` and schema is in `models/Student.ts`.
